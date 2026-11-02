@@ -49,17 +49,21 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	j;
 
 	if (!s2)
+	{
+		free(s1);
 		return (NULL);
+	}
 	joined_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!joined_str)
+	{
+		free(s1);
 		return (NULL);
+	}
 	i = 0;
 	j = 0;
 	while (s1 && s1[j])
-	{
-		joined_str[j] = s1[j];
-		j++;
-	}
+		joined_str[i++] = s1[j++];
+	i = 0;
 	while (s2[i])
 		joined_str[j++] = s2[i++];
 	joined_str[j] = '\0';
