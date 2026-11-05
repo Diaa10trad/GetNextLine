@@ -6,7 +6,7 @@
 /*   By: daltrad <daltrad@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 22:28:49 by daltrad           #+#    #+#             */
-/*   Updated: 2026/11/05 20:33:30 by daltrad          ###   ########.fr       */
+/*   Updated: 2026/11/05 21:49:27 by daltrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static char	*read_to_stash(int fd, char *stash)
 		bytes = read(fd, buf, BUFFER_SIZE);
 		if (bytes < 0)
 			return (free_all(stash, buf));
+		if (bytes == 0)
+			break ;
 		buf[bytes] = '\0';
 		stash = ft_strjoin(stash, buf);
 		if (!stash)
@@ -33,4 +35,31 @@ static char	*read_to_stash(int fd, char *stash)
 	}
 	free(buf);
 	return (stash);
+}
+
+static char	*extract_line(char *stash)
+{
+	size_t	i;
+	char	*line;
+
+	if (!stash || stash[0] == '\0')
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	if (stash[i] == '\n')
+		i++;
+	line = malloc((i + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+	{
+		line[i] = stash[i];
+		i++;
+	}
+	if (stash[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
 }
