@@ -62,11 +62,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	while (s1 && s1[j])
-		joined_str[i++] = s1[j++];
+		joined_str[j++] = s1[i++];
 	i = 0;
 	while (s2[i])
 		joined_str[j++] = s2[i++];
 	joined_str[j] = '\0';
 	free(s1);
 	return (joined_str);
+}
+
+char	*free_all(char *stash, char *buf)
+{
+	free(stash);
+	free(buf);
+	return (NULL);
 }
